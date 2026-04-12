@@ -1,72 +1,224 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>LaixOptimizer | Rendimiento Competitivo</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaixOS</title>
+
+<style>
+
+/* BASE */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020202;
+    color: white;
+}
+
+/* SECTION */
+.os-section {
+    padding: 140px 20px;
+    text-align: center;
+    position: relative;
+}
+
+/* GRID FONDO */
+.os-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0,255,150,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,150,0.05) 1px, transparent 1px);
+    background-size: 35px 35px;
+}
+
+/* HEADER */
+.os-header {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: auto;
+}
+
+.os-header h2 {
+    font-size: 48px;
+    margin: 20px 0;
+}
+
+.os-header h2 span {
+    color: #00ff9c;
+}
+
+.tag {
+    font-size: 12px;
+    background: rgba(0,255,150,0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: #00ff9c;
+}
+
+/* CARDS */
+.os-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 80px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
+
+.os-card {
+    width: 300px;
+    padding: 40px 25px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(0,255,150,0.15);
+    text-align: left;
+    transition: 0.3s;
+    position: relative;
+}
+
+/* HOVER */
+.os-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(0,255,150,0.4);
+}
+
+/* DESTACADO (Extreme) */
+.pro {
+    border: 1px solid #00ff9c;
+    box-shadow: 0 0 30px rgba(0,255,150,0.3);
+}
+
+/* BADGE */
+.badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 11px;
+    background: #00ff9c;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+/* TEXTO */
+.os-card h3 {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.os-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.os-card li {
+    margin-bottom: 10px;
+    color: #bbb;
+}
+
+/* PRECIO */
+.precio {
+    font-size: 32px;
+    color: #00ff9c;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* BOTON */
+.btn {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid #00ff9c;
+    color: #00ff9c;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #00ff9c;
+    color: black;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .os-header h2 {
+        font-size: 32px;
+    }
+
+    .os-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .os-card {
+        width: 90%;
+        max-width: 320px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-    <nav>
-        <h2>LaixOptimizer</h2>
-        <div>
-            <a href="#servicios">Servicios</a>
-            <a href="#contacto">Contacto</a>
+<section class="os-section">
+
+    <div class="os-header">
+        <span class="tag">LAIXOS</span>
+        <h2>Optimización real.<br><span>Sin basura.</span></h2>
+        <p>Menos latencia. Más FPS. Control total del sistema.</p>
+    </div>
+
+    <div class="os-cards">
+
+        <!-- LITE -->
+        <div class="os-card">
+            <h3>Lite</h3>
+            <ul>
+                <li>✔ Eliminación de procesos innecesarios</li>
+                <li>✔ Ajustes de Windows</li>
+                <li>✔ Mejora de estabilidad</li>
+            </ul>
+            <span class="precio">$5.000 Pesos</span>
+            <a href="https://discord.gg/rpTqEtcsPE" class="btn" target="_blank">Adquirir</a>
         </div>
-    </nav>
 
-    <header class="hero">
-        <h1>Rendimiento sin límites</h1>
-        <p>Optimización profesional enfocada en Fortnite y Free Fire.</p>
-        <a href="#contacto" class="btn">Solicitar Optimización</a>
-    </header>
-
-    <section id="servicios" class="servicios">
-        <h2>Servicios</h2>
-
-        <div class="cards">
-            <div class="card">
-                <h3>Fortnite</h3>
-                <p>Configuración enfocada en estabilidad y fluidez competitiva.</p>
-            </div>
-
-            <div class="card">
-                <h3>Free Fire</h3>
-                <p>Ajustes optimizados para experiencia más rápida y consistente.</p>
-            </div>
-
-            <div class="card">
-                <h3>Optimización Personalizada</h3>
-                <p>Configuración adaptada a tu hardware específico.</p>
-            </div>
+        <!-- PRO -->
+        <div class="os-card">
+            <h3>Pro</h3>
+            <ul>
+                <li>✔ Tweaks avanzados de sistema</li>
+                <li>✔ Optimización de latencias</li>
+                <li>✔ Configuración gaming competitiva</li>
+            </ul>
+            <span class="precio">$7.000 Pesos</span>
+            <a href="https://discord.gg/rpTqEtcsPE" class="btn" target="_blank">Adquirir</a>
         </div>
-    </section>
 
-    <section class="stats">
-        <div>
-            <h3>+50</h3>
-            <p>Optimizaciónes realizadas</p>
+        <!-- EXTREME (DESTACADO) -->
+        <div class="os-card pro">
+            <span class="badge">Recomendado</span>
+            <h3>Extreme</h3>
+            <ul>
+                <li>✔ Tuning CPU / GPU / RAM</li>
+                <li>✔ Modificación profunda del sistema</li>
+                <li>✔ Modificación profunda de la bios</li>
+                <li>✔ Máximo rendimiento posible</li>
+            </ul>
+            <span class="precio">$9.000 Pesos</span>
+            <a href="https://discord.gg/rpTqEtcsPE" class="btn" target="_blank">Adquirir</a>
         </div>
-        <div>
-            <h3>100%</h3>
-            <p>Enfoque competitivo</p>
-        </div>
-        <div>
-            <h3>24/7</h3>
-            <p>Soporte</p>
-        </div>
-    </section>
 
-    <section id="contacto" class="contacto">
-        <h2>Contacto</h2>
-        <p>Consultá sin compromiso y mejorá tu experiencia de juego.</p>
-        <a href="https://discord.gg/rpTqEtcsPE" class="btn">Discord Oficial</a>
-    </section>
+    </div>
 
-    <footer>
-        <p>© 2026 LaixOptimizer</p>
-    </footer>
+</section>
 
 </body>
 </html>
-
