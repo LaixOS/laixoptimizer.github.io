@@ -1,224 +1,432 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LaixOS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaixOS | Optimización de Elite</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #00f2ff;
+            --accent-green: #00ff9c;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --glass: rgba(10, 10, 10, 0.7);
+        }
 
-/* BASE */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #020202;
-    color: white;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* SECTION */
-.os-section {
-    padding: 140px 20px;
-    text-align: center;
-    position: relative;
-}
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-/* GRID FONDO */
-.os-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(0,255,150,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,150,0.05) 1px, transparent 1px);
-    background-size: 35px 35px;
-}
+        /* Animated Background */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 242, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 156, 0.05) 0%, transparent 40%);
+        }
 
-/* HEADER */
-.os-header {
-    position: relative;
-    z-index: 2;
-    max-width: 700px;
-    margin: auto;
-}
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            opacity: 0.2;
+        }
 
-.os-header h2 {
-    font-size: 48px;
-    margin: 20px 0;
-}
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 10%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(5, 5, 5, 0.5);
+            border-bottom: 1px solid var(--border);
+        }
 
-.os-header h2 span {
-    color: #00ff9c;
-}
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.tag {
-    font-size: 12px;
-    background: rgba(0,255,150,0.1);
-    padding: 6px 14px;
-    border-radius: 20px;
-    color: #00ff9c;
-}
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
 
-/* CARDS */
-.os-cards {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 80px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
-}
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
 
-.os-card {
-    width: 300px;
-    padding: 40px 25px;
-    border-radius: 15px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(0,255,150,0.15);
-    text-align: left;
-    transition: 0.3s;
-    position: relative;
-}
+        .nav-links a:hover {
+            color: var(--accent);
+        }
 
-/* HOVER */
-.os-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 25px rgba(0,255,150,0.4);
-}
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            padding-top: 80px;
+        }
 
-/* DESTACADO (Extreme) */
-.pro {
-    border: 1px solid #00ff9c;
-    box-shadow: 0 0 30px rgba(0,255,150,0.3);
-}
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
 
-/* BADGE */
-.badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 11px;
-    background: #00ff9c;
-    color: black;
-    padding: 5px 10px;
-    border-radius: 8px;
-}
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--accent), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* TEXTO */
-.os-card h3 {
-    font-size: 26px;
-    margin-bottom: 20px;
-}
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
 
-.os-card ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 25px;
-}
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent), var(--accent-green));
+            color: #000;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        }
 
-.os-card li {
-    margin-bottom: 10px;
-    color: #bbb;
-}
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+        }
 
-/* PRECIO */
-.precio {
-    font-size: 32px;
-    color: #00ff9c;
-    display: block;
-    margin-bottom: 20px;
-}
+        /* Features Section */
+        .features {
+            padding: 100px 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
 
-/* BOTON */
-.btn {
-    display: inline-block;
-    background: transparent;
-    border: 1px solid #00ff9c;
-    color: #00ff9c;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: 0.3s;
-}
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
 
-.btn:hover {
-    background: #00ff9c;
-    color: black;
-}
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .os-header h2 {
-        font-size: 32px;
-    }
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
 
-    .os-cards {
-        flex-direction: column;
-        align-items: center;
-    }
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
 
-    .os-card {
-        width: 90%;
-        max-width: 320px;
-    }
-}
+        .feature-card p {
+            color: var(--text-dim);
+        }
 
-</style>
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 10%;
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .price-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 3.5rem 2rem;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .price-card.featured {
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--accent);
+            color: #000;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .price-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-val {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--accent-green);
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+
+        .price-card li {
+            margin-bottom: 1rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-card li i {
+            color: var(--accent-green);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: block;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 10%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3.5rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
 
-<section class="os-section">
+    <div class="bg-glow"></div>
+    <div class="grid-overlay"></div>
 
-    <div class="os-header">
-        <span class="tag">LAIXOS</span>
-        <h2>Optimización real.<br><span>Sin basura.</span></h2>
-        <p>Menos latencia. Más FPS. Control total del sistema.</p>
-    </div>
-
-    <div class="os-cards">
-
-        <!-- LITE -->
-        <div class="os-card">
-            <h3>Lite</h3>
-            <ul>
-                <li>✔ Eliminación de procesos innecesarios</li>
-                <li>✔ Ajustes de Windows</li>
-                <li>✔ Mejora de estabilidad</li>
-            </ul>
-            <span class="precio">$5.000 Pesos</span>
-            <a href="https://discord.gg/rpTqEtcsPE" class="btn" target="_blank">Adquirir</a>
+    <nav>
+        <div class="logo">LAIXOS</div>
+        <div class="nav-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#features">Características</a>
+            <a href="#pricing">Planes</a>
+            <a href="https://discord.gg/aqqshwXjb2" target="_blank">Discord</a>
         </div>
+    </nav>
 
-        <!-- PRO -->
-        <div class="os-card">
-            <h3>Pro</h3>
-            <ul>
-                <li>✔ Tweaks avanzados de sistema</li>
-                <li>✔ Optimización de latencias</li>
-                <li>✔ Configuración gaming competitiva</li>
-            </ul>
-            <span class="precio">$7.000 Pesos</span>
-            <a href="https://discord.gg/rpTqEtcsPE" class="btn" target="_blank">Adquirir</a>
+    <section class="hero" id="inicio">
+        <h1 class="reveal">Domina el <span>Juego.</span></h1>
+        <p class="reveal" style="animation-delay: 0.2s;">Optimización de sistema de alto nivel. Reduce latencia, aumenta FPS y desbloquea el verdadero potencial de tu hardware.</p>
+        <div class="reveal" style="animation-delay: 0.4s;">
+            <a href="#pricing" class="btn-primary">Ver Planes</a>
         </div>
+    </section>
 
-        <!-- EXTREME (DESTACADO) -->
-        <div class="os-card pro">
-            <span class="badge">Recomendado</span>
-            <h3>Extreme</h3>
-            <ul>
-                <li>✔ Tuning CPU / GPU / RAM</li>
-                <li>✔ Modificación profunda del sistema</li>
-                <li>✔ Modificación profunda de la bios</li>
-                <li>✔ Máximo rendimiento posible</li>
-            </ul>
-            <span class="precio">$9.000 Pesos</span>
-            <a href="https://discord.gg/rpTqEtcsPE" class="btn" target="_blank">Adquirir</a>
+    <section class="features" id="features">
+        <div class="feature-card reveal">
+            <i class="fas fa-bolt"></i>
+            <h3>Latencia Cero</h3>
+            <p>Ajustes profundos en el kernel y red para una respuesta instantánea en juegos competitivos.</p>
         </div>
+        <div class="feature-card reveal" style="animation-delay: 0.1s;">
+            <i class="fas fa-microchip"></i>
+            <h3>CPU Tuning</h3>
+            <p>Priorización de procesos y optimización de energía para maximizar la frecuencia de tu procesador.</p>
+        </div>
+        <div class="feature-card reveal" style="animation-delay: 0.2s;">
+            <i class="fas fa-shield-halved"></i>
+            <h3>Sin Basura</h3>
+            <p>Eliminamos telemetría, bloatware y servicios innecesarios que consumen tus recursos.</p>
+        </div>
+    </section>
 
-    </div>
+    <section class="pricing" id="pricing">
+        <h2 style="font-size: 3rem; margin-bottom: 1rem;">Nuestros <span>Planes</span></h2>
+        <p style="color: var(--text-dim); margin-bottom: 3rem;">Elige el nivel de potencia que necesitas.</p>
 
-</section>
+        <div class="pricing-grid">
+            <!-- LITE -->
+            <div class="price-card reveal">
+                <h3>Lite</h3>
+                <div class="price-val">$5.000</div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Ajustes de Windows</li>
+                    <li><i class="fas fa-check"></i> Limpieza de Temporales</li>
+                    <li><i class="fas fa-check"></i> Optimización de Inicio</li>
+                    <li><i class="fas fa-check"></i> Mejora de Estabilidad</li>
+                </ul>
+                <a href="https://discord.gg/aqqshwXjb2" class="btn-outline" target="_blank">Adquirir</a>
+            </div>
+
+            <!-- EXTREME (DESTACADO) -->
+            <div class="price-card featured reveal" style="animation-delay: 0.1s;">
+                <div class="badge">Popular</div>
+                <h3>Extreme</h3>
+                <div class="price-val">$9.000</div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Tuning CPU / GPU / RAM</li>
+                    <li><i class="fas fa-check"></i> Modificación de BIOS</li>
+                    <li><i class="fas fa-check"></i> Latency Tweaks Extremos</li>
+                    <li><i class="fas fa-check"></i> Overclock Seguro</li>
+                    <li><i class="fas fa-check"></i> Soporte Prioritario</li>
+                </ul>
+                <a href="https://discord.gg/aqqshwXjb2" class="btn-primary" target="_blank">Adquirir Ahora</a>
+            </div>
+
+            <!-- PRO -->
+            <div class="price-card reveal" style="animation-delay: 0.2s;">
+                <h3>Pro</h3>
+                <div class="price-val">$7.000</div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Tweaks de Sistema</li>
+                    <li><i class="fas fa-check"></i> Config Gaming Pro</li>
+                    <li><i class="fas fa-check"></i> Optimización de Red</li>
+                    <li><i class="fas fa-check"></i> Registro Optimizado</li>
+                </ul>
+                <a href="https://discord.gg/aqqshwXjb2" class="btn-outline" target="_blank">Adquirir</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://discord.gg/aqqshwXjb2" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p style="color: var(--text-dim);">&copy; 2024 LaixOS. Todos los derechos reservados.</p>
+    </footer>
 
 </body>
 </html>
